@@ -15,19 +15,21 @@ config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
-const sessionStore = MongoStore.create({
-    mongoUrl: process.env.MONGO_URI,
-    collectionName: "sessions",
-});
+app.use(cors({
+    origin: "http://localhost:4000",
+    credentials: true,
+    optionsSuccessStatus: 200,
+}))
 
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: true,
-        cookie: { secure: false, httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }, // Set secure to true if using HTTPS
-        store: sessionStore,
+        saveUninitialized: false,
+        cookie: { secure: false, httpOnly: false, maxAge: 3600000 }, // One hour cookie
+        store: new MongoStore({
+            mongoUrl: process.env.MONGO_URI+''
+        })
     })
 );
 
@@ -46,4 +48,4 @@ connect(process.env.MONGO_URI)
     console.log("Failed to connect to MongoDB", err);
 });
 
-// app.use(handleError)
+app.use(handleError)
