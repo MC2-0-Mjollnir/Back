@@ -7,6 +7,67 @@ import verifyAuth from "../middleware/verifyAuth.js";
  * tags:
  *   name: Users
  *   description: API endpoints for managing users
+ * /api/v1/users/login:
+ *   post:
+ *     summary: Login a user.
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: The logged-in user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid email or password.
+ * /api/v1/users/register:
+ *   post:
+ *     summary: Register a user.
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: The registered user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid email.
+ * /api/v1/users/logout:
+ *   post:
+ *     summary: Logout the current user.
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Registered successfully.
+ *       500:
+ *         description: Failed to logout.
  * /api/v1/users:
  *   get:
  *     summary: Get all users.
@@ -88,7 +149,7 @@ import verifyAuth from "../middleware/verifyAuth.js";
  *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found.
- * /api/v1/profile:
+ * /api/v1/users/profile:
  *   get:
  *     summary: Get the current user's profile.
  *     tags: [Users]
@@ -101,67 +162,6 @@ import verifyAuth from "../middleware/verifyAuth.js";
  *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found.
- * /api/v1/login:
- *   post:
- *     summary: Login a user.
- *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: The logged-in user.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       400:
- *         description: Invalid email or password.
- * /api/v1/register:
- *   post:
- *     summary: Register a user.
- *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               firstName:
- *                 type: string
- *               lastName:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: The registered user.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       400:
- *         description: Invalid email.
- * /api/v1/logout:
- *   post:
- *     summary: Logout the current user.
- *     tags: [Users]
- *     responses:
- *       200:
- *         description: Registered successfully.
- *       500:
- *         description: Failed to logout.
  */
 
 const { getUsers, getSingleUser, updateUser, visitProfile, registerUser, loginUser, logoutUser, deleteUser } = usersControllers
