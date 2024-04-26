@@ -4,9 +4,13 @@ import verifyAuth from "../middleware/verifyAuth.js";
 
 /**
  * @swagger
+ * tags:
+ *   name: Users
+ *   description: API endpoints for managing users
  * /api/v1/users:
  *   get:
  *     summary: Get all users.
+ *     tags: [Users]
  *     responses:
  *       200:
  *         description: A list of users.
@@ -23,6 +27,7 @@ import verifyAuth from "../middleware/verifyAuth.js";
  *         description: No users found.
  *   post:
  *     summary: Register a new user.
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -41,6 +46,7 @@ import verifyAuth from "../middleware/verifyAuth.js";
  * /api/v1/users/{userId}:
  *   get:
  *     summary: Get a single user by ID.
+ *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: userId
@@ -59,6 +65,7 @@ import verifyAuth from "../middleware/verifyAuth.js";
  *         description: User not found.
  *   put:
  *     summary: Update a user by ID.
+ *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: userId
@@ -84,6 +91,7 @@ import verifyAuth from "../middleware/verifyAuth.js";
  * /api/v1/profile:
  *   get:
  *     summary: Get the current user's profile.
+ *     tags: [Users]
  *     responses:
  *       200:
  *         description: The current user's profile.
@@ -96,6 +104,7 @@ import verifyAuth from "../middleware/verifyAuth.js";
  * /api/v1/login:
  *   post:
  *     summary: Login a user.
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -119,6 +128,7 @@ import verifyAuth from "../middleware/verifyAuth.js";
  * /api/v1/register:
  *   post:
  *     summary: Register a user.
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -146,6 +156,7 @@ import verifyAuth from "../middleware/verifyAuth.js";
  * /api/v1/logout:
  *   post:
  *     summary: Logout the current user.
+ *     tags: [Users]
  *     responses:
  *       200:
  *         description: Registered successfully.
