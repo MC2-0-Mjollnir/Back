@@ -9,6 +9,7 @@ import handleError from "./middleware/handleError.js";
 //router SSOT
 import routers from "./routes/index.js";
 import Swagger from "./Swagger.js";
+
 config();
 
 const app = express();
@@ -31,10 +32,9 @@ app.use(
 );
 
 // Middleware to serve Swagger UI
-app.use("/api/v1/", routers);
+app.use("/api/v1", routers);
 Swagger(app)
 app.use('*', (req, res) => res.send("Invalid Route"));
-
 
 connect(process.env.MONGO_URI)
 .then(() => {
@@ -46,4 +46,4 @@ connect(process.env.MONGO_URI)
     console.log("Failed to connect to MongoDB", err);
 });
 
-app.use(handleError)
+// app.use(handleError)

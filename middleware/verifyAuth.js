@@ -1,6 +1,6 @@
 import AppError from "../utils/AppError.js";
 
-function isAuthenticated(req, res, next) {
+function verifyAuth(req, res, next) {
     try {
         if (!(req.session && req.session.user)) {
             throw new AppError('Unauthorized', 401);
@@ -11,4 +11,4 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-export default isAuthenticated;
+export default verifyAuth;

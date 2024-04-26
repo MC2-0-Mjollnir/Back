@@ -1,8 +1,9 @@
 import AppError from '../utils/AppError.js';
 import { compare, genSalt, hash } from 'bcrypt';
 import User from '../models/User.js';
+import { isValidObjectId } from 'mongoose';
 
-const getUsers = async (req, res) => {
+const getUsers = async (req, res, next) => {
     try {
         const users = await User.find({});
 
@@ -16,9 +17,14 @@ const getUsers = async (req, res) => {
     }
 };
 
-const getSingleUser = async (req, res) => {
+const getSingleUser = async (req, res, next) => {
     try {
         const { id: userId } = req.params;
+
+        if (!isValidObjectId(userId)) {
+            throw new AppError('Invalid user ID')
+        }
+
         const user = await User.findById(userId);
 
         if (!user) {
@@ -31,11 +37,15 @@ const getSingleUser = async (req, res) => {
     }
 };
 
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
     try {
         const { id: userId } = req.params;
         const { firstName, lastName, password } = req.body;
 
+        if (!isValidObjectId(userId)) {
+            throw new AppError('Invalid user ID')
+        }
+;
         const user = await User.findById(userId);
 
         if (!user) {
@@ -59,8 +69,8 @@ const updateUser = async (req, res) => {
     }
 };
 
-const visitProfile = (req, res) => {
-    try {        
+const visitProfile = (req, res, next) => {
+    try {
         const user = req.session.user;
     
         if (!user) {
@@ -73,7 +83,7 @@ const visitProfile = (req, res) => {
     }
 };
 
-const registerUser = async (req, res) => {
+const registerUser = async (req, res, next) => {
     try {
         const { firstName, lastName, email, password } = req.body;
 
@@ -103,7 +113,7 @@ const registerUser = async (req, res) => {
     }
 };
 
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
@@ -127,7 +137,7 @@ const loginUser = async (req, res) => {
     }
 };
 
-const logoutUser = (req, res) => {
+const logoutUser = (req, res, next) => {
     try {
         req.session.destroy((err) => {
             if (err) {

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import usersControllers from '../controllers/usersControllers.js'
+import verifyAuth from "../middleware/verifyAuth.js";
 
 /**
  * @swagger
@@ -115,12 +116,39 @@ import usersControllers from '../controllers/usersControllers.js'
  *               $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid email or password.
+ * /api/v1/register:
+ *   post:
+ *     summary: Register a user.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: The registered user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid email.
  * /api/v1/logout:
  *   post:
  *     summary: Logout the current user.
  *     responses:
  *       200:
- *         description: Logged out successfully.
+ *         description: Registered successfully.
  *       500:
  *         description: Failed to logout.
  */
@@ -129,17 +157,20 @@ const { getUsers, getSingleUser, updateUser, visitProfile, registerUser, loginUs
 
 const router = Router();
 
+router.post('/login', loginUser);
+
+router.post('/register', registerUser);
+
+router.use(verifyAuth)
+
 router.get('/', getUsers);
+
+router.get('/profile', visitProfile);
 
 router.get('/:id', getSingleUser);
 
 router.patch('/:id', updateUser);
 
-router.get('/profile', visitProfile);
-
-router.post('/register', registerUser);
-
-router.post('/login', loginUser);
 
 router.post('/logout', logoutUser);
 
