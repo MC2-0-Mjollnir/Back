@@ -4,6 +4,7 @@ import User from '../models/User.js';
 import { isValidObjectId } from 'mongoose';
 
 const getUsers = async (req, res, next) => {
+
     try {
         const users = await User.find({});
 
@@ -22,7 +23,7 @@ const getSingleUser = async (req, res, next) => {
         const { id: userId } = req.params;
 
         if (!isValidObjectId(userId)) {
-            throw new AppError('Invalid user ID')
+            throw new AppError('Invalid user ID', 401)
         }
 
         const user = await User.findById(userId);
@@ -45,7 +46,7 @@ const updateUser = async (req, res, next) => {
         if (!isValidObjectId(userId)) {
             throw new AppError('Invalid user ID')
         }
-;
+
         const user = await User.findById(userId);
 
         if (!user) {
@@ -137,6 +138,26 @@ const loginUser = async (req, res, next) => {
     }
 };
 
+const deleteUser = async (req, res, next) => {
+    try {
+        const { id: userId } = req.params;
+
+        if (!isValidObjectId(userId)) {
+            throw new AppError('Invalid user ID', 401)
+        }
+
+        const user = await User.findByIdAndDelete(userId);
+
+        if (!user) {
+            throw new AppError('User not found', 404);
+        }
+
+        res.status(204).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        next(error);
+    }
+};
+
 const logoutUser = (req, res, next) => {
     try {
         req.session.destroy((err) => {
@@ -157,5 +178,6 @@ export default {
     visitProfile,
     registerUser,
     loginUser,
+    deleteUser,
     logoutUser
 }

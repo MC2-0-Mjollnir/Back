@@ -153,7 +153,7 @@ import verifyAuth from "../middleware/verifyAuth.js";
  *         description: Failed to logout.
  */
 
-const { getUsers, getSingleUser, updateUser, visitProfile, registerUser, loginUser, logoutUser } = usersControllers
+const { getUsers, getSingleUser, updateUser, visitProfile, registerUser, loginUser, logoutUser, deleteUser } = usersControllers
 
 const router = Router();
 
@@ -171,6 +171,7 @@ router.get('/:id', getSingleUser);
 
 router.patch('/:id', updateUser);
 
+router.delete('/:id', deleteUser);
 
 router.post('/logout', logoutUser);
 

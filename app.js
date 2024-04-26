@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: "http://localhost:4000",
+    origin: "http://localhost:"+process.env.ORIGIN_PORT+"",
     credentials: true,
     optionsSuccessStatus: 200,
 }))
