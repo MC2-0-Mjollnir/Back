@@ -144,10 +144,6 @@ const deleteProject = async (req, res, next) => {
             throw new AppError('Project not found', 404);
         }
 
-        if (project.owner !== req.session.user._id) {
-            throw new AppError('Only project owner have the right to delete his project', 404)
-        }
-
         res.status(204).json({ message: 'Project deleted successfully' });
     } catch (error) {
         next(error);
