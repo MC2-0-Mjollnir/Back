@@ -1,4 +1,3 @@
-// controllers/tasksControllers.js
 import { OpenAI } from 'openai';
 import { config } from 'dotenv';
 config()
@@ -17,14 +16,11 @@ async function generateTasks(req, res, next) {
             messages: [
               {
                 role: "user",
-                content: `extract tasks data from ${projectDescription} the output is one array respect this form [{id:'', name:'',start:'',end:'',progress:'',dependencies: ''} ,......]`,
+                content: `extract tasks data from ${projectDescription} the output is one array respect this form [{id:'', name:'',start:'',end:'',progress:'',dependencies: ''}, ......]`,
               },
             ],
           });
-
-        const tasksJSON = response.choices[0].message.content;
-        const tasks = JSON.parse(tasksJSON);
-        res.json({ tasks });
+          res.json({ tasks: response.choices[0].message.content });
     } catch (error) {
         next(error);
     }
