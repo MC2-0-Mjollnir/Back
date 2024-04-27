@@ -8,7 +8,7 @@ const getUsers = async (req, res, next) => {
     try {
         const users = await User.find({});
 
-        res.json({ users });
+        res.status(200).json({ users });
     } catch (error) {
         next(error)
     }
@@ -28,7 +28,7 @@ const getSingleUser = async (req, res, next) => {
             throw new AppError('User not found', 404);
         }
 
-        res.json({ user });
+        res.status(200).json({ user });
     } catch (error) {
         next(error);
     }
@@ -60,7 +60,7 @@ const updateUser = async (req, res, next) => {
 
         const result = await user.save();
 
-        res.json({ user: result });
+        res.status(200).json({ user: result });
     } catch (error) {
         next(error);
     }
@@ -74,7 +74,7 @@ const visitProfile = (req, res, next) => {
             throw new AppError('User not found', 404);
         }
     
-        res.json({ user })
+        res.status(200).json({ user })
     } catch (error) {
         next(error)
     }
@@ -104,7 +104,7 @@ const registerUser = async (req, res, next) => {
 
         req.session.user = savedUser;
 
-        res.json({ user: savedUser });
+        res.status(201).json({ user: savedUser });
     } catch (error) {
         next(error);
     }
@@ -128,7 +128,7 @@ const loginUser = async (req, res, next) => {
 
         req.session.user = user;
 
-        res.json({ user });
+        res.status(200).json({ user });
     } catch (error) {
         next(error);
     }
@@ -160,7 +160,7 @@ const logoutUser = (req, res, next) => {
             if (err) {
                 throw new AppError('Failed to logout', 500);
             }
-            res.json({ message: 'Logged out successfully' });
+            res.status(200).json({ message: 'Logged out successfully' });
         });
     } catch (error) {
         next(error)

@@ -6,7 +6,7 @@ const getProjects = async (req, res, next) => {
     try {
         const projects = await Project.find({}).populate('joinedMembers.user', 'firstName lastName email');
 
-        res.json({ projects });
+        res.status(200).json({ projects });
     } catch (error) {
         next(error)
     }
@@ -20,7 +20,7 @@ const getJoinedProjects = async (req, res, next) => {
             }
         })
 
-        res.json({ projects });
+        res.status(200).json({ projects });
     } catch (error) {
         next(error)
     }
@@ -40,7 +40,7 @@ const getSingleProject = async (req, res, next) => {
             throw new AppError('Project not found', 404);
         }
 
-        res.json({ project });
+        res.status(200).json({ project });
     } catch (error) {
         next(error);
     }
@@ -68,7 +68,7 @@ const joinProject = async (req, res, next) => {
 
         const result = await project.save();
 
-        res.json({ project: result });
+        res.status(200).json({ project: result });
     } catch (error) {
         next(error);
     }
@@ -102,7 +102,7 @@ const updateProject = async (req, res, next) => {
 
         const result = await project.save();
 
-        res.json({ project: result });
+        res.status(200).json({ project: result });
     } catch (error) {
         next(error);
     }
@@ -124,7 +124,7 @@ const createProject = async (req, res, next) => {
 
         const savedProject = await (await newProject.save()).populate('joinedMembers.user', 'firstName lastName email');
 
-        res.json({ project: savedProject });
+        res.status(201).json({ project: savedProject });
     } catch (error) {
         next(error);
     }

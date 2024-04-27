@@ -75,7 +75,6 @@ const projectSchema = new Schema({
     },
     file: {
         type: String,
-        required: true
     },
     joinedMembers: [{
         user: {
