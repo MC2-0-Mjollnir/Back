@@ -8,10 +8,6 @@ const getUsers = async (req, res, next) => {
     try {
         const users = await User.find({});
 
-        if (!users) {
-            throw new AppError('No users found', 404);
-        }
-
         res.json({ users });
     } catch (error) {
         next(error)

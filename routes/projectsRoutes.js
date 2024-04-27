@@ -27,6 +27,24 @@ import projectsControllers from '../controllers/projectsControllers.js'
  *         description: Successfully created
  *       '400':
  *         description: Bad request, invalid input
+ * /api/v1/projects/joined:
+ *   get:
+ *     summary: Get projects joined by the current user.
+ *     tags: [Projects]
+ *     responses:
+ *       200:
+ *         description: A list of projects joined by the current user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 projects:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Project'
+ *       404:
+ *         description: No projects found for the current user.
  * /api/v1/projects/{id}:
  *   get:
  *     summary: Retrieve a single project by ID
@@ -112,11 +130,13 @@ import projectsControllers from '../controllers/projectsControllers.js'
  *           type: string
  */
 
-const { getProjects, getSingleProject, joinProject, updateProject, createProject, deleteProject } = projectsControllers
+const { getProjects, getJoinedProjects, getSingleProject, joinProject, updateProject, createProject, deleteProject } = projectsControllers
 
 const router = Router();
 
 router.get('/', getProjects);
+
+router.get('/joined', getJoinedProjects);
 
 router.get('/:id', getSingleProject);
 

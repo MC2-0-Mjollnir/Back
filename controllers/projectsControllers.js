@@ -6,9 +6,19 @@ const getProjects = async (req, res, next) => {
     try {
         const projects = await Project.find({}).populate('joinedMembers.user', 'firstName lastName email');
 
-        if (!projects) {
-            throw new AppError('No projects found', 404);
-        }
+        res.json({ projects });
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getJoinedProjects = async (req, res, next) => {
+    try {
+        const projects = await Project.find({
+            joinedMembers: {
+                user: req.session._id
+            }
+        })
 
         res.json({ projects });
     } catch (error) {
@@ -150,6 +160,7 @@ const deleteProject = async (req, res, next) => {
 export default {
     getProjects,
     getSingleProject,
+    getJoinedProjects,
     joinProject,
     updateProject,
     createProject,
