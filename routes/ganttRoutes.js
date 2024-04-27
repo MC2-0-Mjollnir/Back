@@ -4,12 +4,12 @@ import generateTasks from "../controllers/ganttControllers.js";
 /**
  * @swagger
  *  tags:
- *   name: Tasks
+ *   name: Gantt Tasks
  *   description: AI based endpoints are listed here.
  * /api/v1/gantt/generateTasks:
  *   post:
  *     summary: Generate tasks based on project description.
- *     tags: [Tasks]
+ *     tags: [Gantt Tasks]
  *     requestBody:
  *       required: true
  *       content:

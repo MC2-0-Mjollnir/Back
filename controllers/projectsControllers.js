@@ -130,8 +130,6 @@ const createProject = async (req, res, next) => {
     }
 };
 
-
-
 const deleteProject = async (req, res, next) => {
     try {
         const { id: projectId } = req.params;
