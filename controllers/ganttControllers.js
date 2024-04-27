@@ -1,5 +1,6 @@
 import { OpenAI } from 'openai';
 import { config } from 'dotenv';
+import parseDataString from '../utils/ParseData.js';
 config()
 // Set your OpenAI API key
 
@@ -20,7 +21,7 @@ async function generateTasks(req, res, next) {
               },
             ],
           });
-          res.json({ tasks: response.choices[0].message.content });
+          res.json({ tasks: parseDataString(response.choices[0].message.content) });
     } catch (error) {
         next(error);
     }
