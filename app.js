@@ -21,6 +21,9 @@ app.use(cors({
     optionsSuccessStatus: 200,
 }))
 
+//Note that you need to authenticate the user before you can use the API,
+//Docs are available at /api-docs endpoint!
+
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
