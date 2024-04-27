@@ -16,7 +16,7 @@ const getJoinedProjects = async (req, res, next) => {
     try {
         const projects = await Project.find({
             joinedMembers: {
-                user: req.session._id
+                user: req.session.user._id
             }
         })
 
@@ -60,11 +60,11 @@ const joinProject = async (req, res, next) => {
             throw new AppError('Project not found', 404);
         }
 
-        if (project.owner === req.session._id) {
+        if (project.owner === req.session.user._id) {
             throw new AppError("Project owner can't join his own project", 404)
         }
 
-        project.joinedMembers.push(req.session._id);
+        project.joinedMembers.push(req.session.user._id);
 
         const result = await project.save();
 
@@ -89,7 +89,7 @@ const updateProject = async (req, res, next) => {
             throw new AppError('Project not found', 404);
         }
 
-        if (project.owner !== req.session._id) {
+        if (project.owner !== req.session.user._id) {
             throw new AppError('Only project owner have the right to delete his project', 404)
         }
 
@@ -118,7 +118,7 @@ const createProject = async (req, res, next) => {
             file,
             joinedMembers,
             plan,
-            owner: req.session._id,
+            owner: req.session.user._id,
             localisation
         });
 
@@ -144,7 +144,7 @@ const deleteProject = async (req, res, next) => {
             throw new AppError('Project not found', 404);
         }
 
-        if (project.owner !== req.session._id) {
+        if (project.owner !== req.session.user._id) {
             throw new AppError('Only project owner have the right to delete his project', 404)
         }
 
