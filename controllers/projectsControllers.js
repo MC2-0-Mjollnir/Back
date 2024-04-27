@@ -89,10 +89,6 @@ const updateProject = async (req, res, next) => {
             throw new AppError('Project not found', 404);
         }
 
-        if (project.owner !== req.session.user._id) {
-            throw new AppError('Only project owner have the right to delete his project', 404)
-        }
-
         project.title = title;
         project.description = description;
         project.file = file;
